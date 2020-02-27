@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
-
-const Question = () => {
+import Error from './Error'
+const Question = ({setBudgetMain, setBudgetRemain}) => {
 
     // state
     const [quantity, setQuantiy] = useState(0);
@@ -14,11 +14,20 @@ const Question = () => {
     const addBudget = e => {
       e.preventDefault();
       console.log(quantity)
+      if(quantity < 1 || isNaN( quantity )){
+        setError(true);
+        return;
+      }
+
+      setError(false);
+      setBudgetMain(quantity);
+      setBudgetRemain(quantity);
     }
 
     return(
       <Fragment>
         <h2>Coloca tu presupuesto</h2>
+        { error ? <Error msg="El presupuesto es Incorrecto" /> : '' }
         <form
           onSubmit = {addBudget}
         >
