@@ -1,16 +1,40 @@
 import React, { useState } from 'react';
+import Error from './Error'
 
 const Form = () => {
-  return (
-    <form>
-      <h2>Agrega tus gastos aqui</h2>
+  // state
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  const [error, setError] = useState(false);
+  // functions
 
+  const addExpense = e => {
+    e.preventDefault();
+    setError(false);
+    console.log(quantity);
+    if(quantity < 1 || isNaN( quantity ) || name.trim() === ''){
+      setError(true);
+      return;
+    }
+  }
+
+  return (
+    <form
+      onSubmit={addExpense}
+    >
+      <h2>Agrega tus gastos aqui</h2>
+      {
+        error ? <Error msg="Ambos campos son obligatorios o presupuesto incorrecto" />
+        : null
+      }
       <div className="campo">
         <label>Nombre Gasto</label>
         <input
           type="text"
           className="u-full-width"
-          placeholder="Ej. transporte" 
+          placeholder="Ej. transporte"
+          value={name}
+          onChange={ e => setName(e.target.value)} 
         />
       </div>
 
@@ -20,6 +44,8 @@ const Form = () => {
           type="number"
           className="u-full-width"
           placeholder="Ej. 300" 
+          value={quantity}
+          onChange={ e => setQuantity(parseInt( e.target.value ) ) }
         />
       </div>
       <input

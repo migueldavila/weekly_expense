@@ -14,19 +14,28 @@ function App() {
       <header>
         <h1>Gasto Semanal</h1>
         <div className="contenido-principal contenido">
-          <Question 
-            setBudgetMain={setBudgetMain}
-            setBudgetRemain={setBudgetRemain}
-            setShowQuestion={setShowQuestion}
-          />
-          <div className="row">
-            <div className="one-half column">
-              <Form />;
-            </div>
-            <div className="one-half column">
-              2
-            </div>
-          </div>
+          {
+            showquestion ?
+            (
+              <Question 
+                setBudgetMain={setBudgetMain}
+                setBudgetRemain={setBudgetRemain}
+                setShowQuestion={setShowQuestion}
+              />
+            ) :
+            (
+              <div className="row">
+                <div className="one-half column">
+                  <Form />;
+                </div>
+                <div className="one-half column">
+                  2
+                </div>
+              </div>
+            )
+          }
+          
+          
         </div>
       </header>
       
