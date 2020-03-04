@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Error from './Error'
+import shortid from 'shortid';
 
-const Form = () => {
+const Form = ({addNewExpense}) => {
   // state
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState(0);
@@ -10,12 +11,24 @@ const Form = () => {
 
   const addExpense = e => {
     e.preventDefault();
-    setError(false);
+    
     console.log(quantity);
     if(quantity < 1 || isNaN( quantity ) || name.trim() === ''){
       setError(true);
       return;
     }
+    setError(false);
+
+    const expense = {
+      name, 
+      quantity,
+      id: shortid.generate(),
+    }
+
+    
+    addNewExpense(expense);
+    setQuantity(0);
+    setName('');
   }
 
   return (
@@ -45,7 +58,7 @@ const Form = () => {
           className="u-full-width"
           placeholder="Ej. 300" 
           value={quantity}
-          onChange={ e => setQuantity(parseInt( e.target.value ) ) }
+          onChange={ e => setQuantity( parseInt(e.target.value  ) ) }
         />
       </div>
       <input
